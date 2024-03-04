@@ -62,4 +62,7 @@ public class Stock {
     public void setExpiryDate(String expiryDate) {
         this.expiryDate = expiryDate;
     }
+
+    public void addItem(Item item) {
+    }
 }
