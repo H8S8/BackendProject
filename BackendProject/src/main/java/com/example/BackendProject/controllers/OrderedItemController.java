@@ -1,6 +1,6 @@
 package com.example.BackendProject.controllers;
 
-import com.example.BackendProject.models.OrderedItem;
+import com.example.BackendProject.models.*;
 import com.example.BackendProject.services.OrderService;
 import com.example.BackendProject.services.OrderedItemService;
 import com.example.BackendProject.services.StockService;
@@ -36,12 +36,30 @@ public class OrderedItemController {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-   // @PostMapping
-    //public ResponseEntity<OrderedItem> postOrderedItem(@RequestBody)
 
-    //@PatchMapping
+    @PostMapping
+    public ResponseEntity<OrderedItem> postOrderedItem(@RequestBody NewOrderedItemDTO newOrderedItemDTO){
+        Optional<Order> orderOptional  = orderService.getOrderById(newOrderedItemDTO.getOrderId());
+        if(orderOptional.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
-    @DeleteMapping(value = "/{id}")
+        Optional<Stock> optionalStock = stockService.findStock(newOrderedItemDTO.getStockId());
+        if(optionalStock.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+            OrderedItem orderedItem = orderedItemService.saveOrderedItem(newOrderedItemDTO);
+        return new ResponseEntity<>(orderedItem, HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<OrderedItem> updateOrderedItem(@RequestBody NewOrderedItemDTO newOrderedItemDTO, @PathVariable Long id){
+        OrderedItem newOrderedItem = orderedItemService.updateOrderedItem(newOrderedItemDTO, id);
+        return new ResponseEntity<>(newOrderedItem, HttpStatus.OK);
+    }
+
+
+        @DeleteMapping(value = "/{id}")
     public ResponseEntity<Long> deleteOrderedItem(@PathVariable Long id){
         orderedItemService.deleteOrderedItem(id);
         return new ResponseEntity<>(id, HttpStatus.OK);

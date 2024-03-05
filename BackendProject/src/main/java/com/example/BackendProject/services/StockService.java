@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StockService {
@@ -20,8 +21,8 @@ public class StockService {
     public List<Stock> findAllStock(){
         return stockRepository.findAll();
     }
-    public Stock findStock(long id){
-        return stockRepository.findById(id).get();
+    public Optional<Stock> findStock(long id){
+        return stockRepository.findById(id);
     }
     public Stock saveStock(NewStockDTO newStockDTO){
         Stock stock = new Stock(itemRepository.findById(newStockDTO.getItemId()).get(),newStockDTO.getQuantity(), newStockDTO.getExpiryDate());

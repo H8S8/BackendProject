@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("stock")
@@ -24,8 +25,13 @@ public class StockController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Stock> getStock(@PathVariable Long id){
-        return new ResponseEntity<>(stockService.findStock(id), HttpStatus.OK);
+        Optional<Stock> stockOptional = stockService.findStock(id);
+        if(stockOptional.isPresent()) {
+            return new ResponseEntity<>(stockService.findStock(id).get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+        
     @PostMapping
     public ResponseEntity<Stock> postStock(@RequestBody NewStockDTO newStockDTO){
         Stock stock = stockService.saveStock(newStockDTO);

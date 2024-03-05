@@ -1,8 +1,9 @@
 package com.example.BackendProject.services;
 
-import com.example.BackendProject.models.OrderedItem;
-import com.example.BackendProject.models.Stock;
+import com.example.BackendProject.models.*;
+import com.example.BackendProject.repositories.OrderRepository;
 import com.example.BackendProject.repositories.OrderedItemRepository;
+import com.example.BackendProject.repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +13,13 @@ import java.util.Optional;
 public class OrderedItemService {
     @Autowired
     OrderedItemRepository orderedItemRepository;
+    
     @Autowired
-    StockService stockService;
+    OrderRepository orderRepository;
+    
     @Autowired
-    OrderService orderService;
+    StockRepository stockRepository;
+    
 
     public List<OrderedItem> findAllOrderedItems() {
         return orderedItemRepository.findAll();
@@ -27,5 +31,20 @@ public class OrderedItemService {
 
     public void deleteOrderedItem(Long id) {
         orderedItemRepository.deleteById(id);
+    }
+
+    public OrderedItem saveOrderedItem(NewOrderedItemDTO newOrderedItemDTO) {
+        OrderedItem orderedItem = new OrderedItem(orderRepository.findById(newOrderedItemDTO.getOrderId()).get(),
+                stockRepository.findById(newOrderedItemDTO.getStockId()).get(), newOrderedItemDTO.getOrderQuantity());
+        orderedItemRepository.save(orderedItem);
+        return orderedItem;
+    }
+
+
+    public OrderedItem updateOrderedItem(NewOrderedItemDTO newOrderedItemDTO, Long id) {
+        OrderedItem orderedItemToUpdate = orderedItemRepository.findById(id).get();
+        orderedItemToUpdate.setOrderQuantity(newOrderedItemDTO.getOrderQuantity());
+        orderedItemRepository.save(orderedItemToUpdate);
+        return orderedItemToUpdate;
     }
 }

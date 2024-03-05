@@ -3,25 +3,22 @@ package com.example.BackendProject.models;
 
 public class NewOrderedItemDTO {
 
-    private Long orderItemId;
+    private Long stockId;
     private Long orderId;
     private int orderQuantity;
 
-    public NewOrderedItemDTO(Long orderItemId, Long orderId, int orderQuantity) {
-        this.orderItemId = orderItemId;
+    public NewOrderedItemDTO(Long stockId, Long orderId, int orderQuantity) {
+        this.stockId = stockId;
         this.orderId = orderId;
         this.orderQuantity = orderQuantity;
     }
 
-    public NewOrderedItemDTO() {
+    public Long getStockId() {
+        return stockId;
     }
 
-    public Long getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
     }
 
     public Long getOrderId() {

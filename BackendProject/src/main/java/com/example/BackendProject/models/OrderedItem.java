@@ -11,9 +11,9 @@ public class OrderedItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnoreProperties ({"orderedItems"})
+    @JsonIgnoreProperties ({"orderedItem"})
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @JsonIgnoreProperties ({"orderedItems"})

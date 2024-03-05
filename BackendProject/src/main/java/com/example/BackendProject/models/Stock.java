@@ -3,6 +3,7 @@ package com.example.BackendProject.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "stock")
@@ -12,6 +13,11 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnoreProperties({"stock"})
+    @OneToMany(mappedBy = "stock")
+    private List<OrderedItem> orderedItems;
+
+    @JsonIgnoreProperties({"stocks"})
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
@@ -26,6 +32,7 @@ public class Stock {
         this.item = item;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
+        this.orderedItems = new ArrayList<>();
     }
 
     public Stock() {
@@ -64,5 +71,13 @@ public class Stock {
     }
 
     public void addItem(Item item) {
+    }
+
+    public List<OrderedItem> getOrderedItems() {
+        return orderedItems;
+    }
+
+    public void setOrderedItems(List<OrderedItem> orderedItems) {
+        this.orderedItems = orderedItems;
     }
 }

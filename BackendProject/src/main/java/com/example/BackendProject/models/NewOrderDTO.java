@@ -9,7 +9,10 @@ public class NewOrderDTO {
 
     private List<NewOrderedItemDTO> orderedItems;
 
-    public NewOrderDTO(Long supermarketId) {
+    private OrderStatus orderStatus;
+
+    public NewOrderDTO(OrderStatus orderStatus, Long supermarketId) {
+        this.orderStatus = orderStatus;
         this.supermarketId = supermarketId;
         this.orderedItems = new ArrayList<>();
     }
@@ -31,5 +34,13 @@ public class NewOrderDTO {
 
     public void setOrderedItems(List<NewOrderedItemDTO> orderedItems) {
         this.orderedItems = orderedItems;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

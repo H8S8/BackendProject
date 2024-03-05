@@ -1,14 +1,15 @@
 package com.example.BackendProject.controllers;
 
+import com.example.BackendProject.models.NewOrderDTO;
 import com.example.BackendProject.models.Order;
+import com.example.BackendProject.models.Supermarket;
+import com.example.BackendProject.repositories.SupermarketRepository;
 import com.example.BackendProject.services.OrderService;
+import com.example.BackendProject.services.SupermarketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,9 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    SupermarketService supermarketService;
 
     @GetMapping
     public ResponseEntity<List<Order>> getAllOrders(){
@@ -35,5 +39,29 @@ public class OrderController {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
+    @PostMapping
+    public ResponseEntity<Order> postOrder(@RequestBody NewOrderDTO newOrderDTO){
+        Optional<Supermarket> supermarket = supermarketService.getSupermarketById(newOrderDTO.getSupermarketId());
+        if(supermarket.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        Order newOrder = orderService.saveOrder(newOrderDTO);
+        return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Order> updateOrder(@RequestBody NewOrderDTO newOrderDTO, @PathVariable Long id){
+        Order newOrder = orderService.updateOrder(newOrderDTO, id);
+        return new ResponseEntity<>(newOrder, HttpStatus.OK);
+
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Long> deleteOrder(@PathVariable Long id){
+        orderService.deleteOrder(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
 
 }

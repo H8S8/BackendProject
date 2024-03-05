@@ -3,8 +3,10 @@ package com.example.BackendProject.components;
 import com.example.BackendProject.models.Item;
 import com.example.BackendProject.models.ProductType;
 import com.example.BackendProject.models.Stock;
+import com.example.BackendProject.models.Supermarket;
 import com.example.BackendProject.repositories.ItemRepository;
 import com.example.BackendProject.repositories.StockRepository;
+import com.example.BackendProject.repositories.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,6 +20,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     StockRepository stockRepository;
+
+    @Autowired
+    SupermarketRepository supermarketRepository;
 
     public DataLoader(){}
 
@@ -41,6 +46,14 @@ public class DataLoader implements ApplicationRunner {
         stockRepository.save(stock2);
         Stock stock3 = new Stock(chocolate, 75, "30/09/2024");
         stockRepository.save(stock3);
+
+        //Supermarket
+        Supermarket Tesco = new Supermarket("Tesco", "Portugal");
+        supermarketRepository.save(Tesco);
+        Supermarket Morrisons = new Supermarket("Morrisons", "London");
+        supermarketRepository.save(Morrisons);
+        Supermarket Sainsburys = new Supermarket("Sainsburys", "Birmingham");
+        supermarketRepository.save(Sainsburys);
 
     }
 
