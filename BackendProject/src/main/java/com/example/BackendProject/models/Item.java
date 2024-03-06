@@ -19,17 +19,13 @@ public class Item {
     @Column(name = "product_type")
     private ProductType productType;
 
-    @Column
-    private int price;
-
     @JsonIgnoreProperties({"item"})
     @OneToMany(mappedBy = "item")
     private List<Stock> stocks;
 
-    public Item(String name, ProductType productType, int price){
+    public Item(String name, ProductType productType){
         this.name = name;
         this.productType = productType;
-        this.price = price;
         this.stocks = new ArrayList<Stock>();
     }
 
@@ -54,13 +50,6 @@ public class Item {
     }
     public void setProductType(ProductType productType) {
         this.productType = productType;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public List<Stock> getStocks() {

@@ -6,10 +6,13 @@ public class NewStockDTO {
     private String expiryDate;
     private long itemId;
 
-    public NewStockDTO(int quantity, String expiryDate, long itemId) {
+    private int unitPrice;
+
+    public NewStockDTO(int quantity, String expiryDate, long itemId, int unitPrice) {
         this.quantity = quantity;
         this.expiryDate = expiryDate;
         this.itemId = itemId;
+        this.unitPrice = unitPrice;
     }
 
     public NewStockDTO() {
@@ -43,7 +46,17 @@ public class NewStockDTO {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(long itemId) {
         this.itemId = itemId;
     }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+
+
 }

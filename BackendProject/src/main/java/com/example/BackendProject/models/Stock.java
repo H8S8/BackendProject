@@ -28,11 +28,15 @@ public class Stock {
     @Column
     private String expiryDate;
 
-    public Stock(Item item, int quantity, String expiryDate) {
+    @Column
+    private int unitPrice;
+
+    public Stock(Item item, int quantity, String expiryDate, int unitPrice) {
         this.item = item;
         this.quantity = quantity;
         this.expiryDate = expiryDate;
         this.orderedItems = new ArrayList<>();
+        this.unitPrice = unitPrice;
     }
 
     public Stock() {
@@ -79,5 +83,13 @@ public class Stock {
 
     public void setOrderedItems(List<OrderedItem> orderedItems) {
         this.orderedItems = orderedItems;
+    }
+
+    public int getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(int unitPrice) {
+        this.unitPrice = unitPrice;
     }
 }
