@@ -18,7 +18,7 @@ public class Order {
 
     @JsonIgnoreProperties({"order"})
     @OneToMany(mappedBy = "order")
-    private List<OrderedItem> orderedItem;
+    private List<OrderedItem> orderedItems;
 
     @JsonIgnoreProperties({"orders"})
     @ManyToOne
@@ -29,7 +29,7 @@ public class Order {
     public Order(OrderStatus orderStatus, Supermarket supermarket) {
         this.orderStatus = orderStatus;
         this.supermarket = supermarket;
-        this.orderedItem = new ArrayList<>();
+        this.orderedItems = new ArrayList<>();
     }
 
     public Order() {
@@ -59,11 +59,19 @@ public class Order {
         this.supermarket = supermarket;
     }
 
-    public List<OrderedItem> getOrderedItem() {
-        return orderedItem;
+    public List<OrderedItem> getOrderedItems() {
+        return orderedItems;
     }
 
-    public void setOrderedItem(List<OrderedItem> orderedItem) {
-        this.orderedItem = orderedItem;
+    public void setOrderedItems(List<OrderedItem> orderedItems) {
+        this.orderedItems = orderedItems;
+    }
+
+    public int calculateOrderCost(){
+        int totalCost = 0;
+        for(OrderedItem orderedItem : this.orderedItems){
+            totalCost += orderedItem.getStock().getUnitPrice() * orderedItem.getOrderQuantity();
+        }
+        return totalCost;
     }
 }

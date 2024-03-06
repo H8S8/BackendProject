@@ -47,7 +47,7 @@ public class OrderService {
 
     public void deleteOrder(Long id) {
         Order order = getOrderById(id).get();
-        for(OrderedItem orderedItem : order.getOrderedItem()){
+        for(OrderedItem orderedItem : order.getOrderedItems()){
             orderedItemRepository.deleteById(orderedItem.getId());
         }
         orderRepository.deleteById(id);

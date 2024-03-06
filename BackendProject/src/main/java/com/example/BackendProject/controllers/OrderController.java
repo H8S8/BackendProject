@@ -40,6 +40,16 @@ public class OrderController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping(value = "/{id}/order-cost")
+    public ResponseEntity<Integer> calculateOrderCost(@PathVariable long id){
+        Optional<Order> optionalOrder = orderService.getOrderById(id);
+        if(optionalOrder.isPresent()){
+            Integer orderCost = optionalOrder.get().calculateOrderCost();
+            return new ResponseEntity<>(orderCost, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping
     public ResponseEntity<Order> postOrder(@RequestBody NewOrderDTO newOrderDTO){
         Optional<Supermarket> supermarket = supermarketService.getSupermarketById(newOrderDTO.getSupermarketId());
@@ -69,6 +79,4 @@ public class OrderController {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
-
-
 }
