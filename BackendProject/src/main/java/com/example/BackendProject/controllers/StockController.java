@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("stock")
+@RequestMapping("stocks")
 public class StockController {
 
     @Autowired

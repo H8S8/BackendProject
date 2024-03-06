@@ -2,6 +2,7 @@ package com.example.BackendProject.services;
 
 import com.example.BackendProject.models.*;
 import com.example.BackendProject.repositories.OrderRepository;
+import com.example.BackendProject.repositories.OrderedItemRepository;
 import com.example.BackendProject.repositories.SupermarketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class OrderService {
     SupermarketRepository supermarketRepository;
 
     @Autowired
-    OrderedItemService orderedItemService;
+    OrderedItemRepository orderedItemRepository;
 
     public List<Order> getAllOrders(){
         return orderRepository.findAll();
@@ -45,6 +46,10 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
+        Order order = getOrderById(id).get();
+        for(OrderedItem orderedItem : order.getOrderedItem()){
+            orderedItemRepository.deleteById(orderedItem.getId());
+        }
         orderRepository.deleteById(id);
     }
 }
