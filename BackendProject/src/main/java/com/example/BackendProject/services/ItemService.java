@@ -2,7 +2,9 @@ package com.example.BackendProject.services;
 
 import com.example.BackendProject.models.Item;
 import com.example.BackendProject.models.ProductType;
+import com.example.BackendProject.models.Stock;
 import com.example.BackendProject.repositories.ItemRepository;
+import com.example.BackendProject.repositories.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ public class ItemService {
 
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    StockRepository stockRepository;
 
     public List<Item> getAllItems() {
         return itemRepository.findAll();
@@ -33,6 +37,10 @@ public class ItemService {
     }
 
     public void deleteItem(Long id) {
+        Item item = findItemById(id).get();
+        for(Stock stock: item.getStocks()){
+            stockRepository.deleteById(stock.getId());
+        }
         itemRepository.deleteById(id);
     }
 
@@ -42,4 +50,6 @@ public class ItemService {
         itemRepository.save(itemToUpdate);
         return itemToUpdate;
     }
+
+
 }

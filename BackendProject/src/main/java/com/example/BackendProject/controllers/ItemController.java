@@ -52,8 +52,12 @@ public class ItemController {
     //DELETE
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Long> deleteItem(@PathVariable Long id){
-        itemService.deleteItem(id);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        Optional<Item> itemToDelete = itemService.findItemById(id);
+        if(itemToDelete.isPresent()){
+            itemService.deleteItem(id);
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        }
+       return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     //UPDATE
