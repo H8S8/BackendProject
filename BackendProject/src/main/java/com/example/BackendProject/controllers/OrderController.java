@@ -52,9 +52,12 @@ public class OrderController {
 
     @PatchMapping(value = "/{id}")
     public ResponseEntity<Order> updateOrder(@RequestBody NewOrderDTO newOrderDTO, @PathVariable Long id){
-        Order newOrder = orderService.updateOrder(newOrderDTO, id);
-        return new ResponseEntity<>(newOrder, HttpStatus.OK);
-
+        Optional<Order> orderToUpdate = orderService.getOrderById(id);
+        if(orderToUpdate.isPresent()) {
+             Order newOrder = orderService.updateOrder(newOrderDTO, id);
+             return new ResponseEntity<>(newOrder, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")

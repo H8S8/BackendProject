@@ -31,20 +31,20 @@ public class DataLoader implements ApplicationRunner {
 
         //Items
 
-        Item milk = new Item("Semi-skimmed milk", ProductType.DAIRY, 5);
+        Item milk = new Item("Semi-skimmed milk", ProductType.DAIRY);
         itemRepository.save(milk);
-        Item carrot = new Item("Carrot", ProductType.FRUITANDVEG, 3);
+        Item carrot = new Item("Carrot", ProductType.FRUITANDVEG);
         itemRepository.save(carrot);
-        Item chocolate = new Item("Mint Chocolote Caramel", ProductType.DAIRY, 15);
+        Item chocolate = new Item("Mint Chocolote Caramel", ProductType.DAIRY);
         itemRepository.save(chocolate);
 
 
         //Stock
-        Stock stock1 = new Stock(milk, 50, "11/03/2024");
+        Stock stock1 = new Stock(milk, 50, "11/03/2024", 5);
         stockRepository.save(stock1);
-        Stock stock2 = new Stock(carrot, 100, "15/03/2024");
+        Stock stock2 = new Stock(carrot, 100, "15/03/2024", 4);
         stockRepository.save(stock2);
-        Stock stock3 = new Stock(chocolate, 75, "30/09/2024");
+        Stock stock3 = new Stock(chocolate, 75, "30/09/2024", 20);
         stockRepository.save(stock3);
 
         //Supermarket

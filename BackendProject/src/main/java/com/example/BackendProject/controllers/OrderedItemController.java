@@ -4,6 +4,7 @@ import com.example.BackendProject.models.*;
 import com.example.BackendProject.services.OrderService;
 import com.example.BackendProject.services.OrderedItemService;
 import com.example.BackendProject.services.StockService;
+import jdk.javadoc.doclet.Reporter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -53,13 +54,18 @@ public class OrderedItemController {
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<OrderedItem> updateOrderedItem(@RequestBody NewOrderedItemDTO newOrderedItemDTO, @PathVariable Long id){
-        OrderedItem newOrderedItem = orderedItemService.updateOrderedItem(newOrderedItemDTO, id);
-        return new ResponseEntity<>(newOrderedItem, HttpStatus.OK);
+    public ResponseEntity<OrderedItem> updateOrderedItem(@RequestBody NewOrderedItemDTO newOrderedItemDTO,
+                                                         @PathVariable Long id){
+        Optional<OrderedItem> orderedItemToUpdate = orderedItemService.findOrderedItem(id);
+        if (orderedItemToUpdate.isPresent()){
+            OrderedItem newOrderedItem = orderedItemService.updateOrderedItem(newOrderedItemDTO, id);
+            return new ResponseEntity<>(newOrderedItem, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 
-        @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Long> deleteOrderedItem(@PathVariable Long id){
         orderedItemService.deleteOrderedItem(id);
         return new ResponseEntity<>(id, HttpStatus.OK);

@@ -19,7 +19,12 @@ public class StockController {
     StockService stockService;
 
     @GetMapping
-    public ResponseEntity<List<Stock>> getAllStock(){
+    public ResponseEntity<List<Stock>> getAllStock(
+            @RequestParam(required = false, name = "quantity")Integer quantity
+    ){
+        if(quantity != null) {
+            return new ResponseEntity<>(stockService.findAllStockUnderQuantity(quantity), HttpStatus.OK);
+        }
         return new ResponseEntity<>(stockService.findAllStock(), HttpStatus.OK);
     }
 
@@ -38,6 +43,23 @@ public class StockController {
         return new ResponseEntity<>(stock, HttpStatus.CREATED);
     }
 
+    // Don't Touch The Red Button
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Long> deleteStock(@PathVariable Long id){
+        stockService.deleteStock(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Stock> updateStock(@RequestBody NewStockDTO newStockDTO, @PathVariable Long id){
+        Optional<Stock> stockToUpdate = stockService.findStock(id);
+        if(stockToUpdate.isPresent()) {
+            Stock updatedStock = stockService.updateStock(newStockDTO, id);
+            return new ResponseEntity<>(updatedStock, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+    }
 
 
 

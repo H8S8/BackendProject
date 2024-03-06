@@ -57,6 +57,4 @@ public class NewStockDTO {
     public void setUnitPrice(int unitPrice) {
         this.unitPrice = unitPrice;
     }
-
-
 }
