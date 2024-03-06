@@ -25,4 +25,13 @@ public class ItemService {
     public List<Item> findByProductType(ProductType productType) {
         return itemRepository.findByProductType(productType);
     }
+
+    public Item saveItem(Item createdItem) {
+        itemRepository.save(createdItem);
+        return createdItem;
+    }
+
+    public void deleteItem(Long id) {
+        itemRepository.deleteById(id);
+    }
 }
