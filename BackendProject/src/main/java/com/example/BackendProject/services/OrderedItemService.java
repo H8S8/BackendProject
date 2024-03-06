@@ -4,6 +4,7 @@ import com.example.BackendProject.models.*;
 import com.example.BackendProject.repositories.OrderRepository;
 import com.example.BackendProject.repositories.OrderedItemRepository;
 import com.example.BackendProject.repositories.StockRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +34,17 @@ public class OrderedItemService {
         orderedItemRepository.deleteById(id);
     }
 
-    public OrderedItem saveOrderedItem(NewOrderedItemDTO newOrderedItemDTO) {
+    @Transactional
+    public OrderedItem saveOrderedItem(NewOrderedItemDTO newOrderedItemDTO)throws Exception{
+        Stock stock = stockRepository.findById(newOrderedItemDTO.getStockId()).get();
+        if(newOrderedItemDTO.getOrderQuantity() > stock.getQuantity()){
+            throw new Exception("Not enough stock");
+        }
         OrderedItem orderedItem = new OrderedItem(orderRepository.findById(newOrderedItemDTO.getOrderId()).get(),
-                stockRepository.findById(newOrderedItemDTO.getStockId()).get(), newOrderedItemDTO.getOrderQuantity());
+                stock, newOrderedItemDTO.getOrderQuantity());
+
+        stock.removeFromStock(newOrderedItemDTO.getOrderQuantity());
+        stockRepository.save(stock);
         orderedItemRepository.save(orderedItem);
         return orderedItem;
     }

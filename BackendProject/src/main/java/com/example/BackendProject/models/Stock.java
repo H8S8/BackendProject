@@ -92,4 +92,7 @@ public class Stock {
     public void setUnitPrice(int unitPrice) {
         this.unitPrice = unitPrice;
     }
+    public void removeFromStock(int quantityToRemove){
+        this.quantity -= quantityToRemove;
+    }
 }

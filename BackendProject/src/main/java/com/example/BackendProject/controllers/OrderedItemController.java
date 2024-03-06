@@ -49,8 +49,13 @@ public class OrderedItemController {
         if(optionalStock.isEmpty()){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+        try{
             OrderedItem orderedItem = orderedItemService.saveOrderedItem(newOrderedItemDTO);
-        return new ResponseEntity<>(orderedItem, HttpStatus.CREATED);
+            return new ResponseEntity<>(orderedItem, HttpStatus.CREATED);
+        } catch(Exception exception){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @PatchMapping(value = "/{id}")
