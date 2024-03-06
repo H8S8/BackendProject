@@ -57,6 +57,14 @@ public class ItemController {
     }
 
     //UPDATE
-    @PatchMapping
-    public ResponseEntity
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<Item> updateItem(@RequestBody Item item, @PathVariable Long id){
+        Optional<Item> itemToUpdate = itemService.findItemById(id);
+        if(itemToUpdate.isPresent()) {
+            Item updatedItem = itemService.updateItem(item, id);
+            return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
+    }
 }

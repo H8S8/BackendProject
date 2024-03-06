@@ -6,6 +6,7 @@ import com.example.BackendProject.repositories.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -33,5 +34,12 @@ public class ItemService {
 
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
+    }
+
+    public Item updateItem(Item item, Long id) {
+        Item itemToUpdate = itemRepository.findById(id).get();
+        itemToUpdate.setName(item.getName());
+        itemRepository.save(itemToUpdate);
+        return itemToUpdate;
     }
 }
