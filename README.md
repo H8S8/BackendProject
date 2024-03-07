@@ -15,7 +15,7 @@ This API is for a fictional warehouse which contains stock batches of particular
 
 5. Filter Items in the stock database based on their properties. E.g. (showing items that only exist in the dairy aisle)
 
-### Extension Key Function 
+### Extension Key Functionality 
 
 1. Enable orders containing ordered items to be created from the stock.
 
@@ -25,7 +25,7 @@ This API is for a fictional warehouse which contains stock batches of particular
 
 ## Step-by-step Setup Instructions
 
-1. Clone repository using an SSH key.
+1. Fork repository.
 
 2. Create a database named inventory_db.
 
@@ -36,6 +36,14 @@ This API is for a fictional warehouse which contains stock batches of particular
 2. Java
 
 3. Spring Boot
+
+## User Notes
+
+1. Before deleting an orderedItem, to avoid deleting the associted orderedQuantity, please patch the orderedQuantity to be 0 first. This way the quantity of stock in the orderedItem will return to the quantity attribute in the stock.
+
+2. We would recommend not adding multiple orderedItems of the same stock to the same order. It is better to use a patch request to update the orderedItems quantity. We would have ideally error handled this to prevent duplication of orderedItems of the same stock, but unfortunately ran out of time.
+
+3. We had some trouble formatting the JSON segments in the tables below. Postman request bodies and response bodies can also be found in the exported postman file here: https://github.com/H8S8/BackendProject/blob/main/BackendProject.postman_collection.json
 
 ## ERD and UML Diagram 
 
