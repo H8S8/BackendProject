@@ -57,8 +57,23 @@ public class OrderedItemService {
     }
 
 
-    public OrderedItem updateOrderedItem(NewOrderedItemDTO newOrderedItemDTO, Long id) {
+    @Transactional
+    public OrderedItem updateOrderedItem(NewOrderedItemDTO newOrderedItemDTO, Long id) throws Exception{
+        Stock stock = stockRepository.findById(newOrderedItemDTO.getStockId()).get();
+        Order order = orderRepository.findById(newOrderedItemDTO.getOrderId()).get();
+
         OrderedItem orderedItemToUpdate = orderedItemRepository.findById(id).get();
+
+        if (newOrderedItemDTO.getOrderQuantity() > (stock.getQuantity() + orderedItemToUpdate.getOrderQuantity())){
+            throw new Exception("Not enough stock");
+        }
+
+        if (order.getOrderStatus() != OrderStatus.PENDING || order.getOrderStatus() != OrderStatus.IN_PROGRESS){
+            throw new Exception("Can't add items to order");
+        }
+
+        stock.removeFromStock(newOrderedItemDTO.getOrderQuantity() - orderedItemToUpdate.getOrderQuantity());
+
         orderedItemToUpdate.setOrderQuantity(newOrderedItemDTO.getOrderQuantity());
         orderedItemRepository.save(orderedItemToUpdate);
         return orderedItemToUpdate;
