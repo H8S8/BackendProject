@@ -53,8 +53,7 @@ This API is for a fictional warehouse which contains stock batches of particular
 ---|---|---|---|---|---
 |INDEX | localhost:8080/stocks | GET | Return a list of all stock | | |
 |SHOW | localhost:8080/stocks/:id | GET | Returns a specific stock object | | |
-|CREATE | localhost:8080/stocks/:id| POST | Creates a new stock object | 
-```{ "itemId" : 3, "quantity" : 40, "expiryDate" : "23/05/2024", "unitPrice" : 20} ```| ``` {"id":4, "orderedItems":[], "item":{"id":3, "name":"Mint Chocolote Caramel", "productType":"DAIRY"},"quantity":40, "expiryDate":"23/05/24", "unitPrice":20}```|
+|CREATE | localhost:8080/stocks/:id| POST | Creates a new stock object |```{ "itemId" : 3, "quantity" : 40, "expiryDate" : "23/05/2024", "unitPrice" : 20} ```| ``` {"id":4, "orderedItems":[], "item":{"id":3, "name":"Mint Chocolote Caramel", "productType":"DAIRY"},"quantity":40, "expiryDate":"23/05/24", "unitPrice":20}```|
 |DELETE | localhost:8080/stocks/:id | DELETE | Removes a specific stock object | | |
 |UPDATE | localhost:8080/stocks/:id| PATCH | Updates an existing stock object | ```{"quantity" : 60 } ```|``` {"id":3, "orderedItems":[], "item":{"id":3, "name":"Mint Chocolote Caramel", "productType":"DAIRY"}, "quantity":60, "expiryDate":"30/09/2024", "unitPrice":20}``` |
 
