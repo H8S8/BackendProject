@@ -74,9 +74,6 @@ public class Stock {
         this.expiryDate = expiryDate;
     }
 
-    public void addItem(Item item) {
-    }
-
     public List<OrderedItem> getOrderedItems() {
         return orderedItems;
     }
