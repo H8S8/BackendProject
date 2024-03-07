@@ -43,7 +43,7 @@ public class OrderedItemService {
             throw new Exception("Not enough stock");
         }
 
-        if(order.getOrderStatus() != OrderStatus.PENDING || order.getOrderStatus() != OrderStatus.IN_PROGRESS){
+        if(order.getOrderStatus() == OrderStatus.OUT_FOR_DELIVERY || order.getOrderStatus() == OrderStatus.DELIVERED){
             throw new Exception("Can't add items to order");
         }
 
@@ -59,22 +59,21 @@ public class OrderedItemService {
 
     @Transactional
     public OrderedItem updateOrderedItem(NewOrderedItemDTO newOrderedItemDTO, Long id) throws Exception{
-        Stock stock = stockRepository.findById(newOrderedItemDTO.getStockId()).get();
-        Order order = orderRepository.findById(newOrderedItemDTO.getOrderId()).get();
-
         OrderedItem orderedItemToUpdate = orderedItemRepository.findById(id).get();
+        Stock stock = orderedItemToUpdate.getStock();
+        Order order = orderedItemToUpdate.getOrder();
 
         if (newOrderedItemDTO.getOrderQuantity() > (stock.getQuantity() + orderedItemToUpdate.getOrderQuantity())){
             throw new Exception("Not enough stock");
         }
 
-        if (order.getOrderStatus() != OrderStatus.PENDING || order.getOrderStatus() != OrderStatus.IN_PROGRESS){
+        if (order.getOrderStatus() == OrderStatus.OUT_FOR_DELIVERY || order.getOrderStatus() == OrderStatus.DELIVERED){
             throw new Exception("Can't add items to order");
         }
 
         stock.removeFromStock(newOrderedItemDTO.getOrderQuantity() - orderedItemToUpdate.getOrderQuantity());
-
         orderedItemToUpdate.setOrderQuantity(newOrderedItemDTO.getOrderQuantity());
+        stockRepository.save(stock);
         orderedItemRepository.save(orderedItemToUpdate);
         return orderedItemToUpdate;
     }

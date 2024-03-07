@@ -64,11 +64,15 @@ public class OrderedItemController {
     public ResponseEntity<OrderedItem> updateOrderedItem(@RequestBody NewOrderedItemDTO newOrderedItemDTO,
                                                          @PathVariable Long id){
         Optional<OrderedItem> orderedItemToUpdate = orderedItemService.findOrderedItem(id);
-        if (orderedItemToUpdate.isPresent()){
+        if (orderedItemToUpdate.isEmpty()){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        try{
             OrderedItem newOrderedItem = orderedItemService.updateOrderedItem(newOrderedItemDTO, id);
             return new ResponseEntity<>(newOrderedItem, HttpStatus.OK);
+        } catch(Exception exception){
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 
