@@ -13,7 +13,17 @@
 					"name": "/items",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/items",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"items"
+							]
+						}
 					},
 					"response": []
 				},
@@ -23,14 +33,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/items/2",
+							"raw": "localhost:8080/items/3",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"items",
-								"2"
+								"3"
 							]
 						}
 					},
@@ -41,6 +51,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"Broccoli\",\n    \"productType\" : \"FRUITANDVEG\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:8080/items",
 							"host": [
@@ -60,14 +79,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/items/2",
+							"raw": "localhost:8080/items/4",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"items",
-								"2"
+								"4"
 							]
 						}
 					},
@@ -80,7 +99,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\" : \"Fancy carrot\"\n}",
+							"raw": "{\n    \"name\" : \"Mint Chocolate\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -88,14 +107,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/items/2",
+							"raw": "localhost:8080/items/3",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
 								"items",
-								"2"
+								"3"
 							]
 						}
 					},
@@ -110,7 +129,17 @@
 					"name": "/stocks",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/stocks",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"stocks"
+							]
+						}
 					},
 					"response": []
 				},
@@ -118,7 +147,18 @@
 					"name": "/stocks/id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/stocks/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"stocks",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -129,7 +169,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"itemId\" : 2,\n    \"quantity\" : 40,\n    \"expiryDate\" : \"23/05/24\",\n    \"unitPrice\" : 20\n}",
+							"raw": "{\n    \"itemId\" : 3,\n    \"quantity\" : 40,\n    \"expiryDate\" : \"23/05/24\",\n    \"unitPrice\" : 20\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -137,13 +177,13 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/stock",
+							"raw": "localhost:8080/stocks",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"stock"
+								"stocks"
 							]
 						}
 					},
@@ -155,14 +195,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/stock/5",
+							"raw": "localhost:8080/stocks/4",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"stock",
-								"5"
+								"stocks",
+								"4"
 							]
 						}
 					},
@@ -175,7 +215,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"quantity\" : 60\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -183,14 +223,14 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/stock/4",
+							"raw": "localhost:8080/stocks/3",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"stock",
-								"4"
+								"stocks",
+								"3"
 							]
 						}
 					},
@@ -223,7 +263,18 @@
 					"name": "/orders/id",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/orders/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -232,6 +283,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"supermarketId\" : 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:8080/orders",
 							"host": [
@@ -296,7 +356,19 @@
 					"name": "/orders/id/order-cost",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/orders/2/order-cost",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"orders",
+								"2",
+								"order-cost"
+							]
+						}
 					},
 					"response": []
 				}
@@ -325,9 +397,32 @@
 				},
 				{
 					"name": "/ordered_items/id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/ordered-items/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"ordered-items",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
@@ -336,6 +431,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"stockId\" : 1,\n    \"orderId\" : 2,\n    \"orderQuantity\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "localhost:8080/ordered-items",
 							"host": [
@@ -356,7 +460,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"orderQuantity\" : 90\n}",
+							"raw": "{\n    \"orderQuantity\" : 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
