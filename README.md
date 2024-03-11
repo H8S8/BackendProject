@@ -2,6 +2,9 @@
 This server-side project aims to build a data API for a supermarket stock management database. 
 This API is for a fictional warehouse which contains stock batches of particular items. Products in stock can be sorted into a list of ordered items, that is then added to an order placed by a supermarket.
 
+## Trello Board
+https://trello.com/b/g0Koxjmj/backend-server-project
+
 ## MVP and Extension Description
 
 ### MVP Key Functionality
