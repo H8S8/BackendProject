@@ -1,5 +1,7 @@
 package com.example.BackendProject.controllers;
 
+import com.example.BackendProject.Exceptions.NotEnoughStockException;
+import com.example.BackendProject.Exceptions.OrderedCantBeUpdatedException;
 import com.example.BackendProject.models.*;
 import com.example.BackendProject.services.OrderService;
 import com.example.BackendProject.services.OrderedItemService;
@@ -51,11 +53,14 @@ public class OrderedItemController {
         }
 
         try{
-
             OrderedItem orderedItem = orderedItemService.saveOrderedItem(newOrderedItemDTO);
             return new ResponseEntity<>(orderedItem, HttpStatus.CREATED);
+        } catch (OrderedCantBeUpdatedException exception) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        } catch (NotEnoughStockException exception) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         } catch(Exception exception){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -67,11 +72,15 @@ public class OrderedItemController {
         if (orderedItemToUpdate.isEmpty()){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        try{
+        try {
             OrderedItem newOrderedItem = orderedItemService.updateOrderedItem(newOrderedItemDTO, id);
             return new ResponseEntity<>(newOrderedItem, HttpStatus.OK);
-        } catch(Exception exception){
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (OrderedCantBeUpdatedException exception) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        } catch (NotEnoughStockException exception) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
