@@ -1,5 +1,7 @@
 package com.example.BackendProject.services;
 
+import com.example.BackendProject.Exceptions.NotEnoughStockException;
+import com.example.BackendProject.Exceptions.OrderedCantBeUpdatedException;
 import com.example.BackendProject.models.*;
 import com.example.BackendProject.repositories.OrderRepository;
 import com.example.BackendProject.repositories.OrderedItemRepository;
@@ -40,11 +42,11 @@ public class OrderedItemService {
         Order order = orderRepository.findById(newOrderedItemDTO.getOrderId()).get();
 
         if(newOrderedItemDTO.getOrderQuantity() > stock.getQuantity()){
-            throw new Exception("Not enough stock");
+            throw new NotEnoughStockException("Not enough stock");
         }
 
         if(order.getOrderStatus() == OrderStatus.OUT_FOR_DELIVERY || order.getOrderStatus() == OrderStatus.DELIVERED){
-            throw new Exception("Can't add items to order");
+            throw new OrderedCantBeUpdatedException("Can't add items to order");
         }
 
         OrderedItem orderedItem = new OrderedItem(orderRepository.findById(newOrderedItemDTO.getOrderId()).get(),
@@ -64,11 +66,11 @@ public class OrderedItemService {
         Order order = orderedItemToUpdate.getOrder();
 
         if (newOrderedItemDTO.getOrderQuantity() > (stock.getQuantity() + orderedItemToUpdate.getOrderQuantity())){
-            throw new Exception("Not enough stock");
+            throw new NotEnoughStockException("Not enough stock");
         }
 
         if (order.getOrderStatus() == OrderStatus.OUT_FOR_DELIVERY || order.getOrderStatus() == OrderStatus.DELIVERED){
-            throw new Exception("Can't add items to order");
+            throw new OrderedCantBeUpdatedException("Can't add items to order");
         }
 
         stock.removeFromStock(newOrderedItemDTO.getOrderQuantity() - orderedItemToUpdate.getOrderQuantity());
